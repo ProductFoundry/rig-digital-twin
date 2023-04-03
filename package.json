@@ -1,0 +1,23 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "description": "Diagnostic tool",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProductFoundry/sample.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProductFoundry/sample/issues"
+  },
+  "homepage": "https://github.com/ProductFoundry/sample#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
