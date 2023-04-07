@@ -1,4 +1,4 @@
-/* EBike Tire */
+/* Rig wheel rpm */
 define('js/mechanics/RotationSensor', [], function () {
 
     function RotationSensor() {

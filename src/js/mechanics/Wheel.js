@@ -1,4 +1,4 @@
-/* EBike Tire */
+/* Rig wheel */
 define('js/mechanics/Wheel', [], function () {
 
     function Wheel() {

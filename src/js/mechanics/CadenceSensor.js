@@ -1,4 +1,4 @@
-/* EBike Tire */
+/* Reads crank rpm */
 define('js/mechanics/CadenceSensor', [], function () {
 
     function CadenceSensor() {
