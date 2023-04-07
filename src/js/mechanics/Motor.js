@@ -1,4 +1,4 @@
-/* EBike Tire */
+/* EBike Motor */
 define('js/mechanics/Motor', [], function () {
 
     function Motor() {
@@ -6,6 +6,7 @@ define('js/mechanics/Motor', [], function () {
         this.current = null;
         this.timestamp = null;
         this.torque = null;
+        this.power = null;
     }
 
     Motor.prototype.init = function () {

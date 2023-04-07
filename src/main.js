@@ -156,8 +156,8 @@ define('main', [
       }
     })
 
-    const testCaseSelector = $("#test-case-selector");
-    testCaseSelector.append("<option value=''></option>");
+    // const testCaseSelector = $("#test-case-selector");
+    // testCaseSelector.append("<option value=''></option>");
     // const testCases = bs.getAllSpecs();
     // models.forEach(m => testCaseSelector.append("<option value='" + JSON.stringify(m) + "'>" + m.name + "</option>"));
     // testCaseSelector.on("change", function (e) {

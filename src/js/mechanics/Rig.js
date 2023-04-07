@@ -1,7 +1,7 @@
-/* Model of the physical EBike */
-define('js/mechanics/EBike', [], function () {
+/* Model of the physical Rig */
+define('js/mechanics/Rig', [], function () {
 
-    function EBike() {
+    function Rig() {
         this.id = null;
         this.name = null;
         this.primaryGearRatio = null;
@@ -9,126 +9,40 @@ define('js/mechanics/EBike', [], function () {
         this.wheel = null;
         this.supportSetting = null;
         this.rpm = null;
+        this.isWithinAscZone = false;
     }
 
-    EBike.prototype.init = function () {
-        this.torqueSensor.position = this.torqueSensorPosition;
-        this.cadenceSensor.position = this.cadenceSensorPosition;
-        this.motor.position = this.motorPosition;
-        delete this.torqueSensorPosition;
-        delete this.cadenceSensorPosition;
-        delete this.motorPosition;
-        if (this.frontSprocket && this.rearSprocket) {
-            this.primaryGearRatio = this.frontSprocket / this.rearSprocket;
-        }
+    Rig.prototype.init = function () {
         this.tire.init();
         this.motor.init();
     }
 
-    EBike.prototype.setSelectedGear = function (position, selectedGear) {
-        if (position === "front") {
-            this.frontShiftingSystem.selectedGear = selectedGear;
-            if (this.frontShiftingSystem.type === "derailleur") {
-                this.frontSprocket = selectedGear;
-                if (this.frontSprocket && this.rearSprocket) {
-                    this.primaryGearRatio = selectedGear / this.rearSprocket;
-                }
-            } else {
-                this.secondaryGearRatio = selectedGear;
-            }
-        } else if (position === "rear") {
-            this.rearShiftingSystem.selectedGear = selectedGear;
-            if (this.rearShiftingSystem.type === "derailleur") {
-                this.rearSprocket = selectedGear;
-                this.secondaryGearRatio = 1;
-                if (this.frontSprocket && this.rearSprocket) {
-                    this.primaryGearRatio = this.frontSprocket / selectedGear;
-                }
-            } else {
-                this.secondaryGearRatio = selectedGear;
-            }
-        }
-        this.getEffectiveGearRatio();
+    Rig.prototype.getEffectiveGearRatio = function () {
+        this.effectiveGearRatio;
     }
 
-    EBike.prototype.getEffectiveGearRatio = function () {
-        if (!this.primaryGearRatio || !this.secondaryGearRatio) {
-            console.error("Gear ratio error");
-        }
-        this.effectiveGearRatio = this.primaryGearRatio * this.secondaryGearRatio;
-        return this.effectiveGearRatio;
-    }
-
-    EBike.prototype.setTorqueReading = function (reading) {
+    Rig.prototype.setTorqueReading = function (reading) {
         this.torqueSensor.reading = reading;
         this.totalTorque = this.getTotalTorque();
-        this.riderTorque = this.getRiderTorque();
+        this.cannibalTorque = this.getCannibalTorque();
     }
 
-    EBike.prototype.setCadenceReading = function (reading) {
+    Rig.prototype.setCadenceReading = function (reading) {
         this.cadenceSensor.reading = reading;
     }
 
-    EBike.prototype.setMotorCurrent = function (reading) {
+    Rig.prototype.setMotorCurrent = function (reading) {
         this.motor.setCurrent(reading);
     }
 
-    EBike.prototype.getTotalTorque = function () {
-        if (this.motor.position === "crank") {
-            if (this.torqueSensor.position === "crank") {
-                return this.torqueSensor.reading;
-            } else if (this.torqueSensor.position === "rear") {
-                const tgt = this.torqueSensor.reading;// total geared torque
-                const mt = this.motor.getTorque();
-                const ght = tgt - mt;
-                const effectiveGear = this.ebike.getEffectiveGearRatio();
-                const ht = ght / effectiveGear;
-                return ht + mt;
-            }
-        } else if (this.motor.position === "rear") {
-            if (this.torqueSensor.position === "crank") {
-                return this.torqueSensor.reading + this.motor.getTorque();
-            } else if (this.torqueSensor.position === "rear") {
-                const tgt = this.torqueSensor.reading;
-                const mt = this.motor.getTorque();
-                const ght = tgt - mt;
-                const effectiveGear = this.ebike.getEffectiveGearRatio();
-                const ht = ght / effectiveGear;
-                const tt = ht + mt;
-                return tt;
-            }
-        }
+    Rig.prototype.getTotalTorque = function () {
+        return this.torqueSensor.reading;
     }
 
-    EBike.prototype.getRiderTorque = function () {
-        if (this.motor.position === "crank") {
-            if (this.torqueSensor.position === "crank") {
-                return this.getTotalTorque() - this.motor.getTorque();
-            } else if (this.torqueSensor.position === "rear") {
-                // reading is tgt
-                const tgt = this.torqueSensor.reading;// total geared torque
-                const mt = this.motor.getTorque();
-                const ght = tgt - mt;
-                const effectiveGear = this.ebike.getEffectiveGearRatio();
-                const ht = ght / effectiveGear;
-                return ht;
-            }
-        } else if (this.motor.position === "rear") {
-            if (this.torqueSensor.position === "crank") {
-                return this.torqueSensor.reading;
-            } else if (this.torqueSensor.position === "rear") {
-                const tgt = this.torqueSensor.reading;// total geared torque
-                const mt = this.motor.getTorque();
-                const ght = tgt - mt;
-                const effectiveGear = this.ebike.getEffectiveGearRatio();
-                const ht = ght / effectiveGear;
-                return ht;
-            }
-        } else {
-            console.error("Unknown motor position");
-        }
+    Rig.prototype.getCannibalTorque = function () {
+        return this.torqueSensor.reading - this.motor.getTorque();
 
     }
 
-    return EBike;
+    return Rig;
 })

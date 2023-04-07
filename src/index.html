@@ -41,11 +41,11 @@
                             <form>
                                 <div style="display:flex">
                                     <div class="left">
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <select class="form-select-sm col-9" aria-label="Select ebike model"
                                                 id="test-case-selector">
                                             </select>
-                                        </div>
+                                        </div> -->
                                         <div class="row mt-2">
                                             <div class="selected-model"></div>
                                         </div>
@@ -70,89 +70,22 @@
 
                                         </div>
 
-                                        <label for="btnradiofg1"
-                                            class="form-label inline derailleur d-none front-derailleur">Front
-                                            Gear</label>
-                                        <div class="btn-group derailleur d-none front-derailleur" role="group-fg"
-                                            aria-label="Front Gear">
-
-
-                                            <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg1"
-                                                autocomplete="off" checked>
-                                            <label class="btn btn-outline-primary" for="btnradiofg1">1</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg2"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiofg2">2</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg3"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiofg3">3</label>
-
-                                            <input type="radio" class="btn-check" name="btnradio" id="btnradiofg4"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiofg4">4</label>
-
-                                            <input type="radio" class="btn-check" name="btnradio" id="btnradiofg5"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiofg5">5</label>
-
-                                        </div>
-
-                                        <label for="btnradiorg1"
-                                            class="form-label inline rear-derailleur derailleur d-none">Rear
-                                            Gear</label>
-                                        <div class="btn-group rear-derailleur derailleur d-none" role="group-rg"
-                                            aria-label="Rear Gear">
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg1"
-                                                autocomplete="off" checked value="">
-                                            <label class="btn btn-outline-primary" for="btnradiorg1">1</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg2"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiorg2">2</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg3"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiorg3">3</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg4"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiorg4">4</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg5"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiorg5">5</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg6"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiorg3">6</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg7"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiorg4">7</label>
-
-                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg8"
-                                                autocomplete="off">
-                                            <label class="btn btn-outline-primary" for="btnradiorg5">8</label>
-
-                                        </div>
-
-                                        <label for="btnradiosg1" class="form-label inline secondary-gear">Secondary
-                                            Gear</label>
-                                        <div class="btn-group secondary-gear" role="group-sg" aria-label="Rear Gear">
-                                            <br>
-                                            <!-- <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg1"
-                                                autocomplete="off" checked>
-                                            <label class="btn btn-outline-primary" for="btnradiosg1">1</label> -->
-
-                                        </div>
                                     </div>
 
                                     <div class="right">
 
                                     </div>
+                                </div>
+                                <label for="cannibalPower" class="form-label">Cannibal Input power</label>
+                                <div class="inputslider" data-value="0" data-unit="3" data-values="[0-250]"
+                                    id="cannibalInput">
+                                    <input type="number" name="input" autocomplete="off" readonly>
+                                    <div class="area">
+                                        <div class="track"></div>
+                                        <div class="fill"></div>
+                                        <div class="knob"></div>
+                                    </div>
+                                    <div class="values"></div>
                                 </div>
                                 <label for="motorCurrent" class="form-label">Motor Current</label>
                                 <div class="inputslider" data-value="40" data-unit="3" data-values="[0-250]"

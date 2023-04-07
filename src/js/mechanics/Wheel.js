@@ -2,6 +2,7 @@
 define('js/mechanics/Wheel', [], function () {
 
     function Wheel() {
+        this.speed = null;
     }
 
     Wheel.prototype.init = function () {
