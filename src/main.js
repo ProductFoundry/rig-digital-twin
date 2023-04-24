@@ -44,7 +44,7 @@ define('main', [
       type: 'line',
       data: {
         datasets: [{
-          label: 'Speed',
+          label: 'Ebike power',
           yAxisID: 'speed',
           data: eventStack.history.map(eState => {
             return {
