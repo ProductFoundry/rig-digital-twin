@@ -1,5 +1,5 @@
 /* Model of the physical Rig */
-define('js/mechanics/Rig', [], function () {
+define('js/mechanics/Rig', ['js/town/AscClient', 'js/mechanics/Motor'], function (AscClient, Motor) {
 
     function Rig() {
         this.id = null;
@@ -10,6 +10,8 @@ define('js/mechanics/Rig', [], function () {
         this.supportSetting = null;
         this.rpm = null;
         this.isWithinAscZone = false;
+        this.asc = new AscClient();
+        this.motor = new Motor();
     }
 
     Rig.prototype.init = function () {
@@ -42,6 +44,13 @@ define('js/mechanics/Rig', [], function () {
     Rig.prototype.getCannibalTorque = function () {
         return this.torqueSensor.reading - this.motor.getTorque();
 
+    }
+
+    Rig.prototype.setLocation = function (location, callback) {
+        this.asc.location = location;
+        const t = new Date().toTimeString().split(' ');
+        this.asc.timestamp = t[0];
+        this.asc.checkRestrictions(this, callback);
     }
 
     return Rig;

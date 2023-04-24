@@ -3,7 +3,7 @@ define('js/mechanics/Motor', [], function () {
 
     function Motor() {
         this.position = null;
-        this.current = null;
+        this.current = 21;
         this.timestamp = null;
         this.torque = null;
         this.power = null;
