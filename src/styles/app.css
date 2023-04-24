@@ -9,8 +9,13 @@
     background-color: #ffdd00;
     display: flex;
     justify-content: center;
-    align-content: center;
     flex-wrap: wrap;
+}
+
+.spine .brand {
+    width: 70%;
+    align-self: flex-start;
+    margin-top: 10%;
 }
 
 .main {
