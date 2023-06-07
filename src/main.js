@@ -28,11 +28,19 @@ define('main', [
                   y: rig.motor.current,
                   loc: rig.asc.location
                 });
+                chart.data.datasets[1].data.push({
+                  x: rig.asc.timestamp,
+                  y: rig.cannibal.current,
+                });
+                chart.data.datasets[3].data.push({
+                  x: rig.asc.timestamp,
+                  y: rig.asc.enclosingZone === null ? 0 : 1,
+                });
               }
               chart.update();
+              rig.setState(events.shift(), callback);
+              eventStack.push(rig);
             }
-            rig.setLocation(events.shift(), callback);
-            eventStack.push(rig);
           }, 100);
         }
       })
@@ -45,17 +53,65 @@ define('main', [
       data: {
         datasets: [{
           label: 'Ebike power',
-          yAxisID: 'speed',
-          data: eventStack.history.map(eState => {
+          yAxisID: 'motor',
+          data: eventStack.history.map(rState => {
             return {
-              x: eState.asc.timestamp,
-              y: eState.motor.current,
-              loc: eState.asc.location
+              x: rState.asc.timestamp,
+              y: rState.motor.current * rState.motor.voltage,
+              loc: rState.asc.location
             }
           }),
           fill: false,
           borderColor: '#de5e33',
-          tension: 0.1
+          tension: 0.1,
+          pointRadius: 2
+        },
+        {
+          label: 'Cannibal input power', // blue
+          yAxisID: 'cannibal',
+          data: eventStack.history.map(rState => {
+            return {
+              x: rState.asc.timestamp,
+              y: rState.motor.current,
+              loc: rState.asc.location
+            }
+          }),
+          fill: false,
+          borderColor: '#33ceff',
+          tension: 0.1,
+          pointRadius: 2
+        },
+        {
+          label: 'Speed', // green
+          yAxisID: 'speed',
+          data: eventStack.history.map(rState => {
+            return {
+              x: rState.cannibal.timestamp,
+              y: rState.speed,
+              loc: rState.asc.location
+            }
+          }),
+          fill: false,
+          borderColor: '#66AA42',
+          tension: 0.1,
+          pointRadius: 2
+        },
+        {
+          label: 'Zone',
+          yAxisID: 'zone',// yellow
+          data: eventStack.history.map(rState => {
+            return {
+              x: rState.asc.timestamp,
+              y: rState.cannibal.current,
+            }
+          }),
+          fill: {
+            target: 'origin',
+            above: '#ffdd004f',   // Area will be red above the origin
+          },
+          borderColor: 'transparent',
+          tension: 0.1,
+          pointRadius: 1
         },
         ]
       },
@@ -87,7 +143,7 @@ define('main', [
               }
             },
             border: {
-              color: '#33c3f2'
+              color: '#33ceff'
             }
           },
           'motor': {
@@ -108,7 +164,7 @@ define('main', [
               color: '#de5e33'
             }
           },
-          
+
           'speed': {
             type: 'linear',
             position: 'right',
@@ -120,7 +176,31 @@ define('main', [
               }
             },
             border: {
-              color: '#66a941'
+              color: '#66AA42'
+            }
+          },
+
+          'zone': {
+            type: 'linear',
+            position: 'right',
+            max: 1,
+            min: 0,
+            ticks: {
+              callback: function (value, index, ticks) {
+                return "";
+              },
+              min: 0,
+              max: 1,
+              stepSize: 1,
+              autoSkip: true,
+              maxTicksLimit: 2
+            },
+            gridLines: {
+              drawBorder: false,
+              display: false
+            },
+            border: {
+              color: "transparent"
             }
           }
         }
